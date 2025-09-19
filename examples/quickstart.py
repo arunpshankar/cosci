@@ -1,4 +1,6 @@
-"""Quick start example for Cosci SDK using config file."""
+"""
+Quick start example for Cosci SDK using config file.
+"""
 
 from cosci import CoScientist
 
