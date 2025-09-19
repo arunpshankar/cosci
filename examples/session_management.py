@@ -30,14 +30,5 @@ print("Waiting for instance...")
 instance = client.session_manager.wait_for_instance(
     session, timeout=60, poll_interval=2
 )
-print(f"Instance ready: {instance.instance_id}")
-
-# Poll for ideas with progress tracking
-print("Generating ideas...")
-ideas = client.session_manager.poll_for_ideas(instance, timeout=300, min_ideas=3)
-
-print(f"\nGenerated {len(ideas)} ideas:")
-for idea in ideas:
-    print(f"  - {idea.title}")
 
 client.close()
