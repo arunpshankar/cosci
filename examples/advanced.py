@@ -8,7 +8,7 @@ from cosci.config import Config
 # Load and customize config
 config = Config.from_yaml("config.yaml")
 config.log_level = "DEBUG"  # Override for debugging
-config.timeout = 600  # 10 minutes for complex queries
+config.timeout = 1800  # set to 30+ minutes (1800+ seconds) for complex queries
 
 # Use context manager for automatic cleanup
 with CoScientist(config) as client:

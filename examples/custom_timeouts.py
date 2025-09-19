@@ -7,8 +7,8 @@ from cosci.config import Config
 
 # Load config and customize settings
 config = Config.from_yaml()
-config.timeout = 600  # 10 minutes for complex research
-config.poll_interval = 10  # Check every 10 seconds
+config.timeout = 1800  # >= 30 minutes for complex research
+config.poll_interval = 120  # Check every 120 seconds or 2 mins
 config.min_ideas = 5  # Wait for at least 5 ideas
 
 print("Custom Configuration Example")

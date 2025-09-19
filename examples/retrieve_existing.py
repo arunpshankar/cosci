@@ -1,4 +1,6 @@
-"""Example: Retrieve and examine an existing session."""
+"""
+Example: Retrieve and examine an existing session.
+"""
 
 from cosci import CoScientist
 

@@ -1,4 +1,6 @@
-"""Example: Working with sessions and instances directly."""
+"""
+Example: Working with sessions and instances directly.
+"""
 
 from cosci import CoScientist
 
