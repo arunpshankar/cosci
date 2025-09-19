@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
@@ -8,10 +8,10 @@ setup(
     version="1.0.0",
     author="Co-Scientist Team",
     author_email="coscientist@example.com",
-    description="Python SDK for Google's Co-Scientist Discovery Engine - AI-powered research ideation",
+    description="Python SDK for Google's Co-Scientist - AI-powered research ideation",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/yourusername/cosci",
+    url="https://github.com/arunpshankar/cosci.git",
     packages=find_packages(),
     classifiers=[
         "Development Status :: 5 - Production/Stable",
@@ -45,6 +45,6 @@ setup(
         ],
         "colors": [
             "colorama>=0.4.4",
-        ]
+        ],
     },
 )
