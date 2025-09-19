@@ -1,0 +1,5 @@
+include README.md          # Include documentation
+include LICENSE           # Include license file
+include requirements.txt  # Include dependencies list
+recursive-exclude * __pycache__    # Exclude Python cache files
+recursive-exclude * *.py[co]       # Exclude compiled Python files
