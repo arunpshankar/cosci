@@ -1,15 +1,9 @@
-"""
-Quick start example for Cosci SDK.
-"""
+"""Quick start example for Cosci SDK using config file."""
 
 from cosci import CoScientist
 
-# Initialize client
-client = CoScientist(
-    project_id="your-project-id",
-    engine="your-engine-id",
-    credentials_path="path/to/credentials.json",
-)
+# Load client from config.yaml
+client = CoScientist.from_config()
 
 # Generate ideas
 ideas = client.generate_ideas(
@@ -17,7 +11,14 @@ ideas = client.generate_ideas(
 )
 
 # Display results
-for idea in ideas:
-    print(f"Idea: {idea.title}")
-    print(f"Description: {idea.description}")
+print(f"\nGenerated {len(ideas)} ideas:\n")
+print("=" * 60)
+
+for i, idea in enumerate(ideas, 1):
+    print(f"\nIdea {i}: {idea.title}")
+    if idea.description:
+        print(f"Description: {idea.description}")
     print("-" * 40)
+
+# Clean up
+client.close()

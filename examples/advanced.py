@@ -1,38 +1,35 @@
 """
-Advanced usage example for Cosci SDK.
+Advanced example with context manager and custom settings.
 """
 
-from cosci import CoScientist, LogLevel
+from cosci import CoScientist
+from cosci.config import Config
 
-# Initialize with debug logging
-client = CoScientist(
-    project_id="your-project-id",
-    engine="your-engine-id",
-    credentials_path="credentials.json",
-    log_level=LogLevel.DEBUG
-)
+# Load and customize config
+config = Config.from_yaml("config.yaml")
+config.log_level = "DEBUG"  # Override for debugging
+config.timeout = 600  # 10 minutes for complex queries
 
-# Generate ideas with custom parameters
-ideas = client.generate_ideas(
-    research_goal="Innovative methods for early cancer detection using biomarkers",
-    wait_timeout=300,  # 5 minutes
-    min_ideas=5        # Wait for at least 5 ideas
-)
+# Use context manager for automatic cleanup
+with CoScientist(config) as client:
+    # Generate ideas with custom parameters
+    ideas = client.generate_ideas(
+        research_goal="Innovative methods for early cancer detection "
+        "using biomarkers",
+        min_ideas=5,  # Wait for at least 5 ideas
+    )
 
-# Access detailed information
-for idea in ideas:
-    print(f"ID: {idea.idea_id}")
-    print(f"Title: {idea.title}")
-    print(f"Description: {idea.description}")
-    if idea.attributes:
-        print("Attributes:")
-        for key, value in idea.attributes.items():
-            print(f"  {key}: {value}")
-    print("=" * 60)
+    # Process ideas
+    for idea in ideas:
+        print(f"\nID: {idea.idea_id}")
+        print(f"Title: {idea.title}")
+        if idea.description:
+            print(f"Description: {idea.description}")
+        if idea.attributes:
+            print("Attributes:")
+            for key, value in idea.attributes.items():
+                print(f"  - {key}: {value}")
 
-# Get session information
-sessions = client.list_sessions()
-print(f"\nTotal sessions: {len(sessions)}")
-
-# Clean up
-client.close()
+    # List recent sessions
+    sessions = client.list_sessions()
+    print(f"\nTotal sessions: {len(sessions)}")

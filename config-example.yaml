@@ -1,0 +1,16 @@
+# Copy this file to config.yaml and update with your values
+google_cloud:
+  project_id: "your-project-id"
+  engine: "your-engine-id"
+  credentials_path: "path/to/credentials.json"
+  location: "global"
+  collection: "default_collection"
+
+logging:
+  level: "INFO"
+  file: null
+
+settings:
+  timeout: 300
+  min_ideas: 1
+  poll_interval: 5

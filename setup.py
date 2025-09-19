@@ -8,7 +8,7 @@ setup(
     version="1.0.0",
     author="Co-Scientist Team",
     author_email="coscientist@example.com",
-    description="Python SDK for Google's Co-Scientist - AI-powered research ideation",
+    description="Python SDK for Google's Co-Scientist",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/arunpshankar/cosci.git",
