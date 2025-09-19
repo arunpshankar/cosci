@@ -62,3 +62,6 @@ docs/.doctrees/
 # Distribution
 *.tar.gz
 *.whl
+
+# Pre-commit
+.pre-commit/
