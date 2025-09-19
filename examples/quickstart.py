@@ -1,4 +1,6 @@
-"""Quick start example for Cosci SDK."""
+"""
+Quick start example for Cosci SDK.
+"""
 
 from cosci import CoScientist
 
@@ -6,7 +8,7 @@ from cosci import CoScientist
 client = CoScientist(
     project_id="your-project-id",
     engine="your-engine-id",
-    credentials_path="path/to/credentials.json"
+    credentials_path="path/to/credentials.json",
 )
 
 # Generate ideas

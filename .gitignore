@@ -4,6 +4,14 @@ credentials/
 key.json
 service-account*.json
 
+# Configuration files
+config.yaml
+*.local.yaml
+*-local.yaml
+
+# But keep example
+!config.example.yaml
+
 # Python
 __pycache__/
 *.py[cod]
