@@ -11,7 +11,7 @@ from typing import Dict, Optional
 
 # Use try-except for colorama to make it optional
 try:
-    from colorama import Back, Fore, Style, init
+    from colorama import init
 
     init(autoreset=True)
     COLORS_AVAILABLE = True
