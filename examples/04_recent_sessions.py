@@ -1,4 +1,6 @@
-"""List recent research sessions from the last 7 days."""
+"""
+List recent research sessions from the last 7 days.
+"""
 
 from datetime import datetime, timedelta, timezone
 

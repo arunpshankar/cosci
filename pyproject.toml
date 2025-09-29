@@ -33,3 +33,6 @@ dev = ["pytest>=7.0", "black>=22.0", "flake8>=4.0", "mypy>=0.990"]
 Homepage = "https://github.com/yourusername/cosci"
 Documentation = "https://github.com/yourusername/cosci#readme"
 Repository = "https://github.com/yourusername/cosci.git"
+
+[tool.setuptools]
+include-package-data = false

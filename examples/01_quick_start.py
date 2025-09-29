@@ -7,7 +7,8 @@ from cosci import CoScientist
 client = CoScientist.from_config()
 
 # Start research (returns immediately, now with bug fix!)
-research_goal = "Top 5 largest countries in the world by land mass"
+research_goal = "What are the most effective algorithms and approaches for source attribution in answer engines at web \
+    scale, specifically for properly crediting and citing content from web crawl data?"
 session = client.session_manager.create_session(research_goal)
 
 print("\n✅ Research started!")

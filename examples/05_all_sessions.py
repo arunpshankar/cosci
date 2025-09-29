@@ -1,4 +1,6 @@
-"""List all research sessions with their states."""
+"""
+List all research sessions with their states.
+"""
 
 from datetime import datetime
 

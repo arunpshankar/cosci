@@ -6,7 +6,7 @@ import time
 from cosci import CoScientist
 
 # Replace with your session ID to watch
-SESSION_ID = "11717670767947535533"
+SESSION_ID = "2331780263718009802"
 UPDATE_INTERVAL = 30  # seconds
 
 client = CoScientist.from_config()
