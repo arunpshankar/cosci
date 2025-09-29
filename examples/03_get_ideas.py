@@ -29,7 +29,7 @@ print("Ideas Overview")
 print("-" * 40)
 
 for i, idea in enumerate(ideas, 1):
-    print(f"\n📡 Idea {i}: {idea.title}")
+    print(f"\n💡 Idea {i}: {idea.title}")
 
     if idea.description:
         # Clean description display

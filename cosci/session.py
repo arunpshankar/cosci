@@ -29,12 +29,13 @@ class SessionManager:
 
     def create_session(self, research_goal: str) -> ResearchSession:
         """
-        Create a new research session.
+        Create a new research session and start execution.
         """
         self.logger.info(
             f"Creating session for: {research_goal[:100]}...", LogIcons.ROCKET
         )
 
+        # Step 1: Create the session
         response = self._query_assistant(research_goal)
 
         session_id = self._extract_session_id(response)
@@ -50,7 +51,39 @@ class SessionManager:
         self._sessions[session_id] = session
         self.logger.success(f"Session created: {session_id}", LogIcons.SUCCESS)
 
+        # Step 2: Start the execution (THIS WAS MISSING!)
+        self.logger.info("Starting session execution...", LogIcons.PROCESS)
+        try:
+            self._start_session_execution(session_id)
+            session.state = SessionState.IN_PROGRESS
+            self.logger.success("Session execution started", LogIcons.SUCCESS)
+        except Exception as e:
+            self.logger.error(f"Failed to start session execution: {e}", LogIcons.ERROR)
+            raise SessionError(f"Failed to start session execution: {e}")
+
         return session
+
+    def _start_session_execution(self, session_id: str):
+        """
+        Start the execution of a created session.
+        This is the critical second RPC call that was missing.
+        Uses the :startInstance endpoint as shown in the official Colab.
+        """
+        # Build the session path for the parent field
+        session_path = f"{self.api_client.base_path}/sessions/{session_id}"
+
+        # Use the :startInstance endpoint (matching Colab implementation)
+        endpoint = f"sessions/{session_id}:startInstance"
+
+        data = {"parent": session_path}
+
+        try:
+            result = self.api_client.post(endpoint, data)
+            self.logger.debug(f"Session execution started: {result}")
+            return result
+        except Exception as e:
+            self.logger.error(f"Error starting execution: {e}")
+            raise
 
     def get_session_status(self, session_id: str) -> Dict[str, Any]:
         """
@@ -275,7 +308,7 @@ class SessionManager:
 
     def _query_assistant(self, query: str) -> Any:
         """
-        Query the assistant.
+        Query the assistant to create a session.
         """
         endpoint = f"assistants/{self.api_client.assistant}:streamAssist"
         data = {"query": {"text": query}, "answer_generation_mode": "IDEA_FORGE"}

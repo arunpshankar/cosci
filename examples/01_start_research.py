@@ -1,11 +1,12 @@
 """
-Start a research session and exit immediately."""
+Start a research session and exit immediately.
+"""
 
 from cosci import CoScientist
 
 client = CoScientist.from_config()
 
-# Start research (returns immediately)
+# Start research (returns immediately, now with bug fix!)
 research_goal = "Top 5 largest countries in the world by land mass"
 session = client.session_manager.create_session(research_goal)
 

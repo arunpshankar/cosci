@@ -36,7 +36,7 @@ try:
     # Status-specific message
     print()
     if status["state"] == "SUCCEEDED":
-        print("✅ Complete! Run export_ideas.py to retrieve results")
+        print("✅ Complete! Run 03_get_ideas.py to retrieve results")
     elif status["state"] in ["PROCESSING", "ACTIVE"]:
         print("⏳ Processing... check again in a few minutes")
     elif status["state"] == "FAILED":
