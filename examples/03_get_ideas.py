@@ -25,33 +25,34 @@ if not ideas:
 print(f"\n✅ Found {len(ideas)} ideas")
 
 # Display ideas
-print("\n" + "-" * 40)
+print("\n" + "-" * 60)
 print("Ideas Overview")
-print("-" * 40)
+print("-" * 60)
 
 for i, idea in enumerate(ideas, 1):
     print(f"\n💡 Idea {i}: {idea.title}")
 
+    # Display full description in compact format
     if idea.description:
-        # Clean description display
-        description = idea.description[:200]
-        if len(idea.description) > 200:
-            description += "..."
-        print(f"   Description: {description}")
+        print(f"   {idea.description}")
 
     # Display attributes if available
     if idea.attributes:
+        attrs = []
         if idea.attributes.get("eloRating"):
-            print(f"   Elo Rating: {idea.attributes['eloRating']}")
+            attrs.append(f"Elo: {idea.attributes['eloRating']}")
         if idea.attributes.get("category"):
-            print(f"   Category: {idea.attributes['category']}")
+            attrs.append(f"Category: {idea.attributes['category']}")
         if idea.attributes.get("tags"):
-            print(f"   Tags: {', '.join(idea.attributes['tags'])}")
+            attrs.append(f"Tags: {', '.join(idea.attributes['tags'])}")
+
+        if attrs:
+            print(f"   [{' | '.join(attrs)}]")
 
 # Summary statistics
-print("\n" + "=" * 40)
+print("\n" + "=" * 60)
 print("Summary Statistics")
-print("=" * 40)
+print("=" * 60)
 print(f"Total ideas retrieved: {len(ideas)}")
 
 # Calculate average Elo if available

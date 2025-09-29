@@ -1,4 +1,6 @@
-"""Export ideas from a completed session to well-structured JSON."""
+"""
+Export ideas from a completed session to well-structured JSON.
+"""
 
 import json
 from datetime import datetime
