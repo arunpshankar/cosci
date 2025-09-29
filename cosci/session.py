@@ -51,15 +51,51 @@ class SessionManager:
         self._sessions[session_id] = session
         self.logger.success(f"Session created: {session_id}", LogIcons.SUCCESS)
 
-        # Step 2: Start the execution (THIS WAS MISSING!)
+        # Step 2: Wait for session to be fully created (takes ~30-60 seconds)
+        import time
+
+        wait_time = 45  # Wait 45 seconds for session to be ready
+        self.logger.info(
+            f"Waiting {wait_time}s for session to be ready...", LogIcons.WAIT
+        )
+        time.sleep(wait_time)
+
+        # Step 3: Try to start execution
         self.logger.info("Starting session execution...", LogIcons.PROCESS)
+
         try:
             self._start_session_execution(session_id)
             session.state = SessionState.IN_PROGRESS
             self.logger.success("Session execution started", LogIcons.SUCCESS)
-        except Exception as e:
-            self.logger.error(f"Failed to start session execution: {e}", LogIcons.ERROR)
-            raise SessionError(f"Failed to start session execution: {e}")
+        except SessionError as e:
+            # Starting failed - check if session auto-started
+            self.logger.warning(
+                f"Could not manually start session, checking if it auto-started... Error: {e}",
+                LogIcons.WARNING,
+            )
+
+            time.sleep(5)  # Wait another 5 seconds
+
+            try:
+                status = self.get_session_status(session_id)
+                if status["has_instance"]:
+                    self.logger.success(
+                        "Session auto-started successfully!", LogIcons.SUCCESS
+                    )
+                    session.state = SessionState.IN_PROGRESS
+                else:
+                    self.logger.warning(
+                        f"Session created but not started. Manual start may be required.\n"
+                        f"Session ID: {session_id}\n"
+                        f"You can start it via the Co-Scientist UI or wait for auto-start.",
+                        LogIcons.WARNING,
+                    )
+            except Exception:
+                self.logger.warning(
+                    f"Session {session_id} created but start status unclear.\n"
+                    f"Check session status manually.",
+                    LogIcons.WARNING,
+                )
 
         return session
 
@@ -67,23 +103,48 @@ class SessionManager:
         """
         Start the execution of a created session.
         This is the critical second RPC call that was missing.
-        Uses the :startInstance endpoint as shown in the official Colab.
+        Tries multiple methods as different API versions may use different endpoints.
         """
         # Build the session path for the parent field
         session_path = f"{self.api_client.base_path}/sessions/{session_id}"
 
-        # Use the :startInstance endpoint (matching Colab implementation)
+        # Method 1: Try :startInstance endpoint (from official Colab)
+        self.logger.debug("Attempting to start instance with :startInstance endpoint")
         endpoint = f"sessions/{session_id}:startInstance"
 
         data = {"parent": session_path}
 
         try:
             result = self.api_client.post(endpoint, data)
-            self.logger.debug(f"Session execution started: {result}")
+            self.logger.debug(f"Session execution started via :startInstance: {result}")
             return result
         except Exception as e:
-            self.logger.error(f"Error starting execution: {e}")
-            raise
+            self.logger.warning(f":startInstance endpoint failed: {e}")
+
+            # Method 2: Try creating IdeaForge instance directly
+            self.logger.debug(
+                "Attempting alternative method: direct IdeaForge instance creation"
+            )
+            try:
+                alt_endpoint = f"sessions/{session_id}/ideaForgeInstances"
+                alt_data = {}  # Empty body may trigger auto-start
+
+                result = self.api_client.post(alt_endpoint, alt_data)
+                self.logger.debug(
+                    f"Session execution started via alternative method: {result}"
+                )
+                return result
+            except Exception as e2:
+                self.logger.error(f"Alternative method also failed: {e2}")
+
+                # If both methods fail, provide helpful error message
+                raise SessionError(
+                    f"Failed to start session execution. Tried multiple methods:\n"
+                    f"1. :startInstance endpoint: {str(e)}\n"
+                    f"2. Direct instance creation: {str(e2)}\n"
+                    f"The session {session_id} was created but may need manual starting.\n"
+                    f"Check the session status to see if it started automatically."
+                )
 
     def get_session_status(self, session_id: str) -> Dict[str, Any]:
         """

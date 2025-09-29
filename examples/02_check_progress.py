@@ -5,7 +5,7 @@ Check the status of an ongoing research session.
 from cosci import CoScientist
 
 # Replace with your session ID from start_research.py
-SESSION_ID = "11717670767947535533"
+SESSION_ID = "2331780263718009802"
 
 client = CoScientist.from_config()
 
