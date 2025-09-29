@@ -8,7 +8,7 @@ from cosci import CoScientist
 from cosci.utils import IdeaProcessor
 
 # Your completed session ID
-SESSION_ID = "2331780263718009802"
+SESSION_ID = "8681664624681458482"
 
 client = CoScientist.from_config()
 

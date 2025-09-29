@@ -1,12 +1,11 @@
 """
-Retrieve and export ideas from a completed session.
+Retrieve and display ideas from a completed session.
 """
 
 from cosci import CoScientist
-from cosci.utils import IdeaProcessor
 
 # Replace with your completed session ID
-SESSION_ID = "2331780263718009802"
+SESSION_ID = "8681664624681458482"
 
 client = CoScientist.from_config()
 
@@ -49,48 +48,9 @@ for i, idea in enumerate(ideas, 1):
         if idea.attributes.get("tags"):
             print(f"   Tags: {', '.join(idea.attributes['tags'])}")
 
-# Export to JSON
-print("\n" + "-" * 40)
-print("Exporting Data")
-print("-" * 40)
-
-try:
-    output_file = client.session_manager.export_session_ideas(
-        SESSION_ID, output_dir="./data/ideas", format="json"
-    )
-    print(f"\n✅ JSON exported to: {output_file}")
-except Exception as e:
-    print(f"\n❌ Error exporting JSON: {e}")
-
-# Export top ideas as markdown
-try:
-    processor = IdeaProcessor()
-
-    # Rank and get top ideas
-    ranked_ideas = processor.rank_ideas(ideas)
-    top_count = min(3, len(ranked_ideas))  # Get top 3 or fewer if less available
-    top_ideas = ranked_ideas[:top_count]
-
-    # Export to markdown
-    md_file = f"./data/ideas/top_ideas_{SESSION_ID[:8]}.md"
-    processor.export_to_markdown(top_ideas, md_file)
-    print(f"✅ Top {top_count} ideas exported to: {md_file}")
-
-    # Display top ideas summary
-    print("\n" + "-" * 40)
-    print(f"Top {top_count} Ideas (by ranking)")
-    print("-" * 40)
-    for idx, idea in enumerate(top_ideas, 1):
-        print(f"{idx}. {idea.title}")
-        if idea.attributes.get("eloRating"):
-            print(f"   Elo: {idea.attributes['eloRating']}")
-
-except Exception as e:
-    print(f"\n❌ Error exporting markdown: {e}")
-
 # Summary statistics
 print("\n" + "=" * 40)
-print("Export Summary")
+print("Summary Statistics")
 print("=" * 40)
 print(f"Total ideas retrieved: {len(ideas)}")
 
@@ -104,7 +64,7 @@ if elo_ratings:
     avg_elo = sum(elo_ratings) / len(elo_ratings)
     max_elo = max(elo_ratings)
     min_elo = min(elo_ratings)
-    print("Elo Rating Statistics:")
+    print("\nElo Rating Statistics:")
     print(f"  Average: {avg_elo:.2f}")
     print(f"  Maximum: {max_elo}")
     print(f"  Minimum: {min_elo}")
@@ -121,10 +81,6 @@ if categories:
     for cat, count in sorted(categories.items(), key=lambda x: x[1], reverse=True):
         print(f"  {cat}: {count}")
 
-print("\n✅ Export complete!")
-print("\nNext steps:")
-print("  1. Review the JSON file for complete idea details")
-print("  2. Check the markdown file for formatted top ideas")
-print("  3. Use the session ID to track this research session")
+print("\n✅ Retrieval complete!")
 
 client.close()

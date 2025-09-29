@@ -44,7 +44,7 @@ try:
     elif not status["has_instance"]:
         print("🔄 Initializing... check back in a minute")
     else:
-        print(f"⚠️  Unexpected state: {status['state']}")
+        print(f"⚠️  Transition state: {status['state']}")
 
 except Exception as e:
     print(f"\n❌ Error: {e}")
