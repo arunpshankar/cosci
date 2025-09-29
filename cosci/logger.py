@@ -61,7 +61,9 @@ class LogIcons:
 
 
 class Logger:
-    """Main logger class for Co-Scientist SDK."""
+    """
+    Main logger class for Co-Scientist SDK.
+    """
 
     def __init__(
         self,

@@ -40,7 +40,7 @@ class APIClient:
         collection: str = "default_collection",
         assistant: str = "default_assistant",
         logger_name: str = "API",
-        log_level: LogLevel = LogLevel.INFO,
+        log_level: LogLevel = LogLevel.CRITICAL,
         timeout: Optional[int] = None,
         max_retries: Optional[int] = None,
     ):
