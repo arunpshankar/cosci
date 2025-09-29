@@ -6,7 +6,7 @@ from cosci import CoScientist
 from cosci.config import Config
 
 # Load and customize config
-config = Config.from_yaml("config.yaml")
+config = Config.from_yaml()
 config.log_level = "DEBUG"  # Override for debugging
 config.timeout = 1800  # set to 30+ minutes (1800+ seconds) for complex queries
 
@@ -14,8 +14,7 @@ config.timeout = 1800  # set to 30+ minutes (1800+ seconds) for complex queries
 with CoScientist(config) as client:
     # Generate ideas with custom parameters
     ideas = client.generate_ideas(
-        research_goal="Innovative methods for early cancer detection "
-        "using biomarkers",
+        research_goal="Innovative methods for early cancer detection using biomarkers",
         min_ideas=5,  # Wait for at least 5 ideas
     )
 
