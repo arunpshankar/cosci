@@ -1,4 +1,6 @@
-"""Watch a research session with live updates."""
+"""
+Watch a research session with live updates.
+"""
 
 import sys
 import time
@@ -6,7 +8,7 @@ import time
 from cosci import CoScientist
 
 # Replace with your session ID to watch
-SESSION_ID = "8681664624681458482"
+SESSION_ID = "8610558248018890900"
 UPDATE_INTERVAL = 30  # seconds
 
 client = CoScientist.from_config()

@@ -5,7 +5,7 @@ Retrieve and display ideas from a completed session.
 from cosci import CoScientist
 
 # Replace with your completed session ID
-SESSION_ID = "8681664624681458482"
+SESSION_ID = "8610558248018890900"
 
 client = CoScientist.from_config()
 
