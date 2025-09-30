@@ -5,7 +5,7 @@ Check the status of an ongoing research session.
 from cosci import CoScientist
 
 # Replace with your session ID from start_research.py
-SESSION_ID = "8681664624681458482"
+SESSION_ID = "8610558248018890900"
 
 client = CoScientist.from_config()
 
@@ -21,17 +21,6 @@ try:
     # Goal if available
     if status.get("config", {}).get("goal"):
         print(f"Goal: {status['config']['goal']}")
-
-    # Progress bar if max_ideas is set
-    if status.get("config", {}).get("max_ideas"):
-        max_ideas = status["config"]["max_ideas"]
-        current = status["ideas_count"]
-        progress = (current / max_ideas) * 100
-
-        bar_length = 20
-        filled = int(bar_length * current // max_ideas)
-        bar = "█" * filled + "░" * (bar_length - filled)
-        print(f"\nProgress: [{bar}] {current}/{max_ideas} ({progress:.0f}%)")
 
     # Status-specific message
     print()

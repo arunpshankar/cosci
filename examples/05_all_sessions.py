@@ -2,6 +2,7 @@
 List all research sessions with their states.
 """
 
+import os
 from datetime import datetime
 
 import pandas as pd
@@ -164,8 +165,12 @@ print("-" * 40)
 summary_df = df[["Session ID", "State", "Ideas", "Started"]].head(20)
 print(summary_df.to_string(index=False))
 
-# Export to CSV
-csv_filename = f"sessions_summary_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
+# Export to CSV - create directory if it doesn't exist
+output_dir = "./out/sessions"
+os.makedirs(output_dir, exist_ok=True)
+csv_filename = os.path.join(
+    output_dir, f"sessions_summary_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
+)
 df.to_csv(csv_filename, index=False)
 print(f"\n📁 Full data exported to: {csv_filename}")
 

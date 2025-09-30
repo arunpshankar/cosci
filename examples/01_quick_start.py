@@ -7,8 +7,8 @@ from cosci import CoScientist
 client = CoScientist.from_config()
 
 # Start research (returns immediately, now with bug fix!)
-research_goal = "What are the most effective algorithms and approaches for source attribution in answer engines at web \
-    scale, specifically for properly crediting and citing content from web crawl data?"
+research_goal = "Suggest novel algorithms for re-ranking retrieved documents in Retrieval-Augmented Generation (RAG) \
+    systems at scale, to optimize relevance, coherence, and answer quality in the generation phase."
 session = client.session_manager.create_session(research_goal)
 
 print("\n✅ Research started!")

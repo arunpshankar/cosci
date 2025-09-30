@@ -1,4 +1,6 @@
-"""Utility functions for processing and analyzing ideas."""
+"""
+Utility functions for processing and analyzing ideas.
+"""
 
 import json
 from datetime import datetime
@@ -9,11 +11,15 @@ from cosci.models import Idea
 
 
 class IdeaProcessor:
-    """Process and analyze research ideas."""
+    """
+    Process and analyze research ideas.
+    """
 
     @staticmethod
     def rank_ideas(ideas: List[Idea], metric: str = "eloRating") -> List[Idea]:
-        """Rank ideas by specified metric."""
+        """
+        Rank ideas by specified metric.
+        """
         return sorted(ideas, key=lambda x: x.attributes.get(metric, 0), reverse=True)
 
     @staticmethod
@@ -22,7 +28,9 @@ class IdeaProcessor:
         min_elo: Optional[float] = None,
         keywords: Optional[List[str]] = None,
     ) -> List[Idea]:
-        """Filter ideas based on criteria."""
+        """
+        Filter ideas based on criteria.
+        """
         filtered = ideas
 
         if min_elo:
@@ -47,7 +55,9 @@ class IdeaProcessor:
 
     @staticmethod
     def summarize_ideas(ideas: List[Idea]) -> Dict[str, Any]:
-        """Generate summary statistics for ideas."""
+        """
+        Generate summary statistics for ideas.
+        """
         if not ideas:
             return {"count": 0}
 
@@ -68,7 +78,9 @@ class IdeaProcessor:
 
     @staticmethod
     def export_to_markdown(ideas: List[Idea], filepath: str):
-        """Export ideas to markdown format."""
+        """
+        Export ideas to markdown format.
+        """
         content = "# Research Ideas\n\n"
         content += f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M')}\n\n"
 
@@ -96,17 +108,23 @@ class IdeaProcessor:
 
 
 class SessionAnalyzer:
-    """Analyze research sessions and their outcomes."""
+    """
+    Analyze research sessions and their outcomes.
+    """
 
     @staticmethod
     def load_session_data(filepath: str) -> Dict[str, Any]:
-        """Load exported session data from JSON."""
+        """
+        Load exported session data from JSON.
+        """
         with open(filepath, "r") as f:
             return json.load(f)
 
     @staticmethod
     def compare_sessions(session_files: List[str]) -> Dict[str, Any]:
-        """Compare multiple research sessions."""
+        """
+        Compare multiple research sessions.
+        """
         sessions_data = []
 
         for filepath in session_files:

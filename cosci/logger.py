@@ -29,7 +29,9 @@ except ImportError:
 
 
 class LogLevel(Enum):
-    """Enumeration of available log levels."""
+    """
+    Enumeration of available log levels.
+    """
 
     DEBUG = logging.DEBUG
     INFO = logging.INFO
@@ -40,7 +42,9 @@ class LogLevel(Enum):
 
 
 class LogIcons:
-    """Unicode icons for different log types."""
+    """
+    Unicode icons for different log types.
+    """
 
     SUCCESS = "✅"
     ERROR = "❌"
@@ -113,39 +117,57 @@ class Logger:
         self._indent_level = 0
 
     def debug(self, message: str, icon: str = ""):
-        """Log a debug message."""
+        """
+        Log a debug message.
+        """
         self.logger.debug(f"{icon} {message}" if icon else message)
 
     def info(self, message: str, icon: str = ""):
-        """Log an info message."""
+        """
+        Log an info message.
+        """
         self.logger.info(f"{icon} {message}" if icon else message)
 
     def warning(self, message: str, icon: str = ""):
-        """Log a warning message."""
+        """
+        Log a warning message.
+        """
         self.logger.warning(f"{icon} {message}" if icon else message)
 
     def error(self, message: str, icon: str = ""):
-        """Log an error message."""
+        """
+        Log an error message.
+        """
         self.logger.error(f"{icon} {message}" if icon else message)
 
     def critical(self, message: str, icon: str = ""):
-        """Log a critical message."""
+        """
+        Log a critical message.
+        """
         self.logger.critical(f"{icon} {message}" if icon else message)
 
     def success(self, message: str, icon: str = ""):
-        """Log a success message."""
+        """
+        Log a success message.
+        """
         self.logger.log(25, f"{icon} {message}" if icon else message)
 
     def indent(self):
-        """Increase indentation level."""
+        """
+        Increase indentation level.
+        """
         self._indent_level += 1
 
     def dedent(self):
-        """Decrease indentation level."""
+        """
+        Decrease indentation level.
+        """
         self._indent_level = max(0, self._indent_level - 1)
 
     def section(self, title: str, separator: str = "=", width: int = 60):
-        """Log a section header."""
+        """
+        Log a section header.
+        """
         sep_line = separator * width
         self.info("")
         self.info(sep_line)
@@ -153,30 +175,40 @@ class Logger:
         self.info(sep_line)
 
     def subsection(self, title: str):
-        """Log a subsection header."""
+        """
+        Log a subsection header.
+        """
         self.info(f"\n=> {title}")
         self.indent()
 
     def end_subsection(self):
-        """End a subsection."""
+        """
+        End a subsection.
+        """
         self.dedent()
 
     def json(
         self, data: Dict, message: str = "Data:", level: LogLevel = LogLevel.DEBUG
     ):
-        """Log JSON data."""
+        """
+        Log JSON data.
+        """
         self.logger.log(level.value, f"{message}\n{json.dumps(data, indent=2)}")
 
     def list(
         self, items: list, message: str = "Items:", level: LogLevel = LogLevel.INFO
     ):
-        """Log a list."""
+        """
+        Log a list.
+        """
         self.logger.log(level.value, message)
         for item in items:
             self.logger.log(level.value, f"  - {item}")
 
     def progress(self, current: int, total: int, message: str = "Progress"):
-        """Log progress information."""
+        """
+        Log progress information.
+        """
         percentage = (current / total) * 100 if total > 0 else 0
         bar_length = 20
         filled_length = int(bar_length * current // total) if total > 0 else 0
@@ -184,17 +216,23 @@ class Logger:
         self.info(f"{message}: [{bar}] {percentage:.1f}% ({current}/{total})")
 
     def process_start(self, process_name: str):
-        """Log the start of a process."""
+        """
+        Log the start of a process.
+        """
         self.info(f"Starting: {process_name}", LogIcons.PROCESS)
         self.indent()
 
     def process_complete(self, process_name: str):
-        """Log the completion of a process."""
+        """
+        Log the completion of a process.
+        """
         self.dedent()
         self.success(f"Completed: {process_name}", LogIcons.SUCCESS)
 
     def process_failed(self, process_name: str, error: Optional[str] = None):
-        """Log a process failure."""
+        """
+        Log a process failure.
+        """
         self.dedent()
         message = f"Failed: {process_name}"
         if error:
@@ -205,5 +243,7 @@ class Logger:
 def get_logger(
     name: str = "Cosci", level: LogLevel = LogLevel.INFO, **kwargs
 ) -> Logger:
-    """Get or create a logger instance."""
+    """
+    Get or create a logger instance.
+    """
     return Logger(name, level, **kwargs)

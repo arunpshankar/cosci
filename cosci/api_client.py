@@ -101,7 +101,9 @@ class APIClient:
         self.logger.success("API Client ready", LogIcons.SUCCESS)
 
     def _build_base_path(self) -> str:
-        """Build the base path for API endpoints."""
+        """
+        Build the base path for API endpoints.
+        """
         path = (
             f"projects/{self.project_id}/locations/{self.location}/"
             f"collections/{self.collection}/engines/{self.engine}"
@@ -510,7 +512,9 @@ class APIClient:
         return stats
 
     def log_stats(self):
-        """Log current statistics to the logger."""
+        """
+        Log current statistics to the logger.
+        """
         stats = self.get_stats()
 
         self.logger.section("API Statistics", "=", 50)
@@ -541,7 +545,9 @@ class APIClient:
             self.logger.dedent()
 
     def close(self):
-        """Close the API client and clean up resources."""
+        """
+        Close the API client and clean up resources.
+        """
         self.logger.section("Closing API Client", "-", 50)
 
         # Log final statistics

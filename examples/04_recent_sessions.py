@@ -113,19 +113,5 @@ print("=" * 40)
 print(f"Total recent sessions: {len(df)}")
 print(f"Sessions with ideas: {len(df[df['Ideas'] > 0])}")
 print(f"Total ideas generated: {df['Ideas'].sum()}")
-if df["Ideas"].sum() > 0:
-    print(
-        f"Average ideas per productive session: {df[df['Ideas'] > 0]['Ideas'].mean():.1f}"
-    )
-
-# Most productive session
-if len(df[df["Ideas"] > 0]) > 0:
-    most_productive = df.loc[df["Ideas"].idxmax()]
-    print("\nMost productive session:")
-    print(f"  ID: {most_productive['Session ID']}")
-    print(f"  Date: {most_productive['Date']} {most_productive['Time']}")
-    print(f"  Ideas: {most_productive['Ideas']}")
-    if most_productive["Goal"]:
-        print(f"  Goal: {most_productive['Goal']}")
 
 client.close()

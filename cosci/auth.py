@@ -16,7 +16,9 @@ from cosci.logger import LogIcons, LogLevel, get_logger
 
 
 class Authenticator:
-    """Manages authentication for Google Cloud APIs using service account credentials."""
+    """
+    Manages authentication for Google Cloud APIs using service account credentials.
+    """
 
     SCOPES = ["https://www.googleapis.com/auth/cloud-platform"]
 
@@ -27,7 +29,9 @@ class Authenticator:
         logger_name: str = "Auth",
         log_level: LogLevel = LogLevel.INFO,
     ):
-        """Initialize the authenticator."""
+        """
+        Initialize the authenticator.
+        """
         self.logger = get_logger(logger_name, log_level)
 
         if not service_account_path:
@@ -41,7 +45,9 @@ class Authenticator:
         self._service_account_email = None
 
     def authenticate(self) -> str:
-        """Load service account credentials and return initial access token."""
+        """
+        Load service account credentials and return initial access token.
+        """
         self.logger.process_start("Authentication")
 
         try:
@@ -56,7 +62,9 @@ class Authenticator:
             raise AuthenticationError(f"Authentication failed: {e}")
 
     def _load_service_account(self):
-        """Load service account credentials from file."""
+        """
+        Load service account credentials from file.
+        """
         self.logger.info("Loading service account credentials", LogIcons.AUTH)
         self.logger.debug(f"Service account path: {self.service_account_path}")
 
@@ -82,7 +90,9 @@ class Authenticator:
             )
 
     def get_token(self) -> str:
-        """Get current access token."""
+        """
+        Get current access token.
+        """
         if not self._credentials:
             raise AuthenticationError("Not authenticated. Call authenticate() first.")
 
@@ -102,23 +112,31 @@ class Authenticator:
             raise AuthenticationError(f"Failed to get access token: {e}")
 
     def _refresh_token(self):
-        """Refresh the access token."""
+        """
+        Refresh the access token.
+        """
         if self._credentials:
             self._credentials.refresh(self._auth_req)
 
     def get_headers(self) -> Dict[str, str]:
-        """Get HTTP headers with authentication."""
+        """
+        Get HTTP headers with authentication.
+        """
         return {
             "Content-Type": "application/json",
             "Authorization": f"Bearer {self.get_token()}",
         }
 
     def is_authenticated(self) -> bool:
-        """Check if currently authenticated."""
+        """
+        Check if currently authenticated.
+        """
         return self._credentials is not None
 
     def get_auth_info(self) -> Dict[str, any]:
-        """Get information about current authentication."""
+        """
+        Get information about current authentication.
+        """
         info = {
             "authenticated": self.is_authenticated(),
             "project_id": self.project_id,
@@ -132,7 +150,9 @@ class Authenticator:
         return info
 
     def _log_auth_info(self):
-        """Log authentication information."""
+        """
+        Log authentication information.
+        """
         info = self.get_auth_info()
 
         self.logger.info("Authentication Status:", LogIcons.AUTH)
@@ -146,7 +166,9 @@ class Authenticator:
         self.logger.dedent()
 
     def revoke(self):
-        """Clear authentication state."""
+        """
+        Clear authentication state.
+        """
         self.logger.info("Clearing authentication state", LogIcons.AUTH)
 
         if self._service_account_email:
@@ -163,7 +185,9 @@ class Authenticator:
 def authenticate(
     service_account_path: str, project_id: Optional[str] = None, **kwargs
 ) -> Authenticator:
-    """Quick authentication helper."""
+    """
+    Quick authentication helper.
+    """
     auth = Authenticator(service_account_path, project_id, **kwargs)
     auth.authenticate()
     return auth

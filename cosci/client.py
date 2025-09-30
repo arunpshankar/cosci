@@ -158,24 +158,34 @@ class CoScientist:
             raise CosciError(f"Idea generation failed: {e}")
 
     def get_session(self, session_id: str) -> ResearchSession:
-        """Get information about an existing session."""
+        """
+        Get information about an existing session.
+        """
         return self.session_manager.get_session(session_id)
 
     def list_sessions(self) -> List[Dict[str, Any]]:
-        """List all sessions."""
+        """
+        List all sessions.
+        """
         response = self.api_client.get("sessions")
         return response.get("sessions", [])
 
     def close(self):
-        """Close the client and clean up resources."""
+        """
+        Close the client and clean up resources.
+        """
         if self.api_client:
             self.api_client.close()
         self.logger.success("Client closed", LogIcons.SUCCESS)
 
     def __enter__(self):
-        """Context manager entry."""
+        """
+        Context manager entry.
+        """
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        """Context manager exit."""
+        """
+        Context manager exit.
+        """
         self.close()

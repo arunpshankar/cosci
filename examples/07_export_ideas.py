@@ -76,7 +76,7 @@ export_data = {
 }
 
 # Save main export
-output_dir = Path("./data/ideas")
+output_dir = Path("./out/ideas")
 output_dir.mkdir(parents=True, exist_ok=True)
 
 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
