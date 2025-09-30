@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cosci"
-version = "1.0.0"
-authors = [{ name = "Co-Scientist Team", email = "coscientist@example.com" }]
+version = "0.1.0"
+authors = [{ name = "Co-Scientist Team", email = "arunpshankar@google.com" }]
 description = "Python SDK for Google's Co-Scientist Discovery Engine"
 readme = "README.md"
 requires-python = ">=3.8"
@@ -30,9 +30,7 @@ dependencies = [
 dev = ["pytest>=7.0", "black>=22.0", "flake8>=4.0", "mypy>=0.990"]
 
 [project.urls]
-Homepage = "https://github.com/yourusername/cosci"
-Documentation = "https://github.com/yourusername/cosci#readme"
-Repository = "https://github.com/yourusername/cosci.git"
+Repository = "https://github.com/arunpshankar/cosci"
 
 [tool.setuptools]
 include-package-data = false

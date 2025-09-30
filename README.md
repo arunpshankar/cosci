@@ -317,9 +317,9 @@ client = CoScientist(config)
 
 ## Support
 
-- **Documentation**: [GitHub Wiki](https://github.com/yourusername/cosci/wiki)
-- **Issues**: [GitHub Issues](https://github.com/yourusername/cosci/issues)
-- **Examples**: [Example Scripts](https://github.com/yourusername/cosci/tree/main/examples)
+- **Documentation**: [GitHub Wiki](https://github.com/arunpshankar/cosci)
+- **Issues**: [GitHub Issues](https://github.com/arunpshankar/cosci/issues)
+- **Examples**: [Example Scripts](https://github.com/arunpshankar/cosci/tree/main/examples)
 
 ## License
 
@@ -336,7 +336,7 @@ If you use Cosci in your research, please cite:
 ```bibtex
 @software{cosci2024,
   title = {Cosci: Python SDK for Google Co-Scientist},
-  year = {2024},
+  year = {2025},
   url = {https://github.com/yourusername/cosci}
 }
 ```

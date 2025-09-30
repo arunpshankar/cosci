@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="cosci",
-    version="1.0.0",
+    version="0.1.0",
     author="Co-Scientist Team",
     author_email="coscientist@example.com",
     description="Python SDK for Google's Co-Scientist",
