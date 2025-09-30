@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "cosci"
+name = "py-cosci"
 version = "0.1.1"
 authors = [{ name = "Co-Scientist Team", email = "arunpshankar@google.com" }]
 description = "Python SDK for Google's Co-Scientist Discovery Engine"

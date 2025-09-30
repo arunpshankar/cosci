@@ -5,7 +5,7 @@ Python SDK for Google's Co-Scientist Discovery Engine, enabling AI-powered resea
 ## Installation
 
 ```bash
-pip install cosci
+pip install py-cosci
 ```
 
 ## Quick Setup
