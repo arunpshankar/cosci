@@ -334,7 +334,7 @@ Contributions welcome! Please read our [Contributing Guide](CONTRIBUTING.md) for
 If you use Cosci in your research, please cite:
 
 ```bibtex
-@software{cosci2024,
+@software{cosci2025,
   title = {Cosci: Python SDK for Google Co-Scientist},
   year = {2025},
   url = {https://github.com/yourusername/cosci}
