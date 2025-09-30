@@ -55,83 +55,205 @@ for idea in ideas:
     print(f"   {idea.description}\n")
 ```
 
+## Research Workflow
+
+The Co-Scientist API operates through several stages to generate high-quality research ideas:
+
+### Typical Research Stages
+
+1. **CREATING** - Session initialization
+2. **GENERATING_FOCUS_AREAS** - Identifying key research domains
+3. **PREPOPULATING_IDEAS** - Initial idea generation
+4. **GENERATING_SCORING_GUIDELINES** - Creating evaluation criteria
+5. **RUNNING_INITIAL_REVIEW** - First-pass idea evaluation
+6. **REVIEWING_IDEAS** - Detailed review process
+7. **RUNNING_TOURNAMENT** - Competitive ranking of ideas
+8. **SUCCEEDED** - Research complete with ranked ideas
+
+⏱️ **Expected Duration**: 30-60 minutes for a complete research session
+
 ## Examples
 
-### Basic Usage
+### Example 1: Start a Research Session
+
 ```python
 from cosci import CoScientist
 
-# Simple one-liner to get ideas
 client = CoScientist.from_config()
-ideas = client.generate_ideas("Your research question here")
-```
-
-### Advanced Usage with Custom Settings
-```python
-from cosci import CoScientist
-from cosci.config import Config
-
-# Customize configuration
-config = Config.from_yaml("config.yaml")
-config.timeout = 600  # 10 minutes
-config.log_level = "DEBUG"  # See detailed logs
-
-# Initialize with custom config
-client = CoScientist(config)
-
-# Generate ideas with specific requirements
 ideas = client.generate_ideas(
-    research_goal="Innovative cancer detection methods",
-    min_ideas=5,  # Wait for at least 5 ideas
-    wait_timeout=600  # Custom timeout
+    "Suggest novel algorithms for re-ranking retrieved documents in "
+    "Retrieval-Augmented Generation (RAG) systems at scale"
 )
-
-# Process results
-for idea in ideas:
-    print(f"Title: {idea.title}")
-    if idea.attributes:
-        for key, value in idea.attributes.items():
-            print(f"  {key}: {value}")
 ```
 
-### Working with Sessions
+**Output:**
+```
+✅ Research started!
+Session ID: 8610558248018890900
+Goal: Suggest novel algorithms for re-ranking retrieved documents in Retrieval-Augmented Generation (RAG) systems at scale...
+
+Save this ID to check progress (typically takes 30-60 minutes)
+```
+
+### Example 2: Monitor Progress
+
 ```python
 from cosci import CoScientist
 
 client = CoScientist.from_config()
+session_info = client.session_manager.get_session_info("8610558248018890900")
 
-# List existing sessions
-sessions = client.list_sessions()
-print(f"Found {len(sessions)} existing sessions")
+print(f"Session: {session_info.get('name')}")
+print(f"State: {session_info.get('state')}")
+print(f"Ideas: {len(session_info.get('ideas', []))}")
+```
 
-# Get specific session info
-session_info = client.session_manager.get_session_info("session-id-here")
-print(f"Session state: {session_info.get('state')}")
+**Sample Progress Output:**
+```
+Session: 8610558248018890900
+State: GENERATING_FOCUS_AREAS
+Ideas: 27
+⚠️  Transition state: GENERATING_FOCUS_AREAS
+
+# Later...
+Session: 8610558248018890900
+State: PREPOPULATING_IDEAS
+Ideas: 35
+⚠️  Transition state: PREPOPULATING_IDEAS
+
+# Later...
+Session: 8610558248018890900
+State: RUNNING_TOURNAMENT
+Ideas: 88
+⚠️  Transition state: RUNNING_TOURNAMENT
+
+# Finally...
+Session: 8610558248018890900
+State: SUCCEEDED
+Ideas: 88
+✅ Complete! Run 03_get_ideas.py to retrieve results
+```
+
+### Example 3: Retrieve Completed Ideas
+
+```python
+from cosci import CoScientist
+
+client = CoScientist.from_config()
+ideas = client.get_session_ideas("8610558248018890900")
+
+print(f"✅ Found {len(ideas)} ideas\n")
+
+# Display top ideas
+for i, idea in enumerate(ideas[:3], 1):
+    print(f"💡 Idea {i}: {idea.title}")
+    print(f"   {idea.description[:200]}...")
+    if hasattr(idea, 'elo_rating'):
+        print(f"   [Elo: {idea.elo_rating}]")
+    print()
+```
+
+**Output:**
+```
+✅ Found 88 ideas
+
+💡 Idea 1: Adaptive Synergistic Beam Re-ranker (ASBR) for Optimal Document Set Selection in RAG Systems
+   The Adaptive Synergistic Beam Re-ranker (ASBR) is a novel algorithm designed to overcome limitations in RAG by optimizing for an *optimal set* of documents for an LLM's context window...
+   [Elo: 1645.476]
+
+💡 Idea 2: Policy-Learned Generative Relevance (PLGR) Agent with Adaptive Feedback & Hierarchical Optimization for RAG Re-ranking
+   The Policy-Learned Generative Relevance (PLGR) Agent introduces a novel re-ranking strategy that treats context selection as a sequential decision-making process...
+   [Elo: 1556.5459]
+
+💡 Idea 3: The Cognitive Graph Orchestrator (CGO) Reranking Algorithm
+   The Cognitive Graph Orchestrator (CGO) Reranking Algorithm introduces a multi-stage, adaptive pipeline to transform RAG context preparation for LLMs...
+   [Elo: 1539.115]
+```
+
+### Example 4: View Recent Sessions
+
+```python
+from cosci import CoScientist
+
+client = CoScientist.from_config()
+sessions = client.list_sessions(days=7)
+
+print(f"Found {len(sessions)} sessions in last 7 days")
+for session in sessions[:5]:
+    print(f"  {session.id}: {session.state} ({session.idea_count} ideas)")
+```
+
+**Output:**
+```
+Found 13 sessions in last 7 days
+
+State Distribution:
+  CREATING: 7
+  IN_PROGRESS: 5
+  SUCCEEDED: 1
+```
+
+### Example 5: Export Ideas
+
+```python
+from cosci import CoScientist
+
+client = CoScientist.from_config()
+client.export_ideas(
+    session_id="8610558248018890900",
+    output_path="out/ideas/",
+    format="json"
+)
+```
+
+**Output:**
+```
+Exporting session: 8610558248018890900
+✅ Full export: out/ideas/ideas_86105582_20250930_113128.json
+✅ Simple export: out/ideas/ideas_simple_86105582_20250930_113128.json
+
+Exported 88 ideas
+Average Elo: 1379.32
+Top idea: Adaptive Synergistic Beam Re-ranker (ASBR) for Optimal Document Set Selection in RAG Systems
 ```
 
 ## More Examples
 
-Check out the `examples/` directory for more use cases:
+Check out the `examples/` directory for complete working examples:
 
-- `quickstart.py` - Basic usage
-- `advanced.py` - Advanced configuration
-- `session_management.py` - Working with sessions
-- `retrieve_existing.py` - Access previous results
-- `api_statistics.py` - Monitor API performance
+- `01_quick_start.py` - Start a research session
+- `02_monitor_progress.py` - Monitor session progress through all stages
+- `03_get_ideas.py` - Retrieve and display completed ideas with Elo ratings
+- `04_recent_sessions.py` - View recent sessions with statistics
+- `05_all_sessions.py` - Comprehensive session management
+- `07_export_ideas.py` - Export ideas to JSON format
 
 Run any example:
 ```bash
-python examples/quickstart.py
+python examples/01_quick_start.py
 ```
 
 ## Features
 
 - 🚀 **Simple Interface** - One method to generate ideas: `generate_ideas()`
 - ⚙️ **Configurable** - YAML-based configuration for easy setup
-- 📊 **Rich Logging** - Detailed logs with multiple verbosity levels
+- 📊 **Rich Logging** - Detailed logs showing research stages
 - 🔄 **Automatic Retries** - Built-in retry logic with exponential backoff
-- 📈 **Performance Monitoring** - Track API statistics and performance
+- 📈 **Performance Monitoring** - Track research progress through multiple stages
 - 🎯 **Type Safe** - Full type hints for better IDE support
+- 🏆 **Elo Rankings** - Ideas ranked by competitive tournament scoring
+
+## Understanding Elo Ratings
+
+Ideas generated by Co-Scientist are ranked using an Elo rating system:
+
+- **1600+**: Exceptional ideas (top tier)
+- **1500-1599**: Strong ideas with high potential
+- **1400-1499**: Solid ideas worth exploring
+- **1300-1399**: Viable ideas with specific applications
+- **Below 1300**: May require refinement
+
+The average Elo across all ideas provides a quality benchmark for the session.
 
 ## Configuration Options
 
@@ -150,9 +272,9 @@ logging:
   file: null       # Set to path for file logging
 
 settings:
-  timeout: 300          # Max seconds to wait for ideas
+  timeout: 3600         # Max seconds to wait (increase for complex queries)
   min_ideas: 1          # Minimum ideas to generate
-  poll_interval: 5      # Seconds between status checks
+  poll_interval: 30     # Seconds between status checks during research
 ```
 
 ## Requirements
@@ -163,27 +285,29 @@ settings:
 
 ## Troubleshooting
 
-### Authentication Issues
-```python
-# Make sure credentials file exists
-import os
-if not os.path.exists("credentials/service-account.json"):
-    print("Credentials file not found!")
-```
+### Long Wait Times
+Research sessions typically take 30-60 minutes. For complex queries:
 
-### Timeout Issues
 ```python
-# Increase timeout for complex queries
+# Increase timeout for complex research questions
 client = CoScientist.from_config()
 ideas = client.generate_ideas(
-    "Complex research question",
-    wait_timeout=600  # 10 minutes
+    "Complex multi-faceted research question",
+    wait_timeout=3600  # 60 minutes
 )
 ```
 
+### Monitoring Progress
+Use the monitoring script to check intermediate states:
+
+```bash
+python examples/02_monitor_progress.py
+```
+
+This shows the current stage (GENERATING_FOCUS_AREAS, PREPOPULATING_IDEAS, etc.) and idea count.
+
 ### Debug Mode
 ```python
-# Enable debug logging to see what's happening
 from cosci.config import Config
 
 config = Config.from_yaml()
