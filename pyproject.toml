@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "py-cosci"
-version = "0.1.1"
+version = "0.1.2"
 authors = [{ name = "Co-Scientist Team", email = "arunpshankar@google.com" }]
 description = "Python SDK for Google's Co-Scientist Discovery Engine"
 readme = "README.md"
