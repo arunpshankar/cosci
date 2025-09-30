@@ -72,6 +72,8 @@ The Co-Scientist API operates through several stages to generate high-quality re
 
 ⏱️ **Expected Duration**: 30-60 minutes for a complete research session
 
+> **Note:** For complex or multifaceted goals, the research process might take a few hours to ensure thorough exploration and evaluation.
+
 ## Examples
 
 ### Example 1: Start a Research Session
